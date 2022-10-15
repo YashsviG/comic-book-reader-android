@@ -57,23 +57,24 @@ public class FileArchive {
     private static final String MAGIC_ZIP = "PK";
     private static final int MAGIC_ZIP_LENGTH = MAGIC_ZIP.length();
 
-    private File archiveFile;
+    private final File archiveFile;
     private String filename;
     private String fileType;
     int progress;
     int totalEntries;
-    int currentEntry;
+    int currentEntryIndex;
 
     public FileArchive(File newFile) {
         this.archiveFile = newFile;
+        this.currentEntryIndex = 0;
 
         //find other parameters on your own
 
     }
 
-    public FileArchive(File archiveFile, int currentEntry) {
-        this.archiveFile = archiveFile;
-        this.progress = progress;
+    public FileArchive(File newFile, int currentEntryIndex) {
+        this.archiveFile = newFile;
+        this.currentEntryIndex = currentEntryIndex;
     }
 
     public void setFilename(String filename) {
@@ -88,35 +89,41 @@ public class FileArchive {
         this.fileType = fileType;
     }
 
-    public int getProgress() {
-        return progress;
+    public int getCurrentEntryIndex() {
+        return currentEntryIndex;
     }
 
-    public void setProgress(int progress) {
-        this.progress = progress;
+    public void setCurrentEntry(int currentEntryIndex) {
+        this.currentEntryIndex = currentEntryIndex;
     }
 
     public String getFilename() {
         return filename;
     }
 
-    public ComicPage getCurrentZipEntry() throws IOException{
+    //to abstract out different file types when we have them
+    public ComicPage getCurrentEntry() throws IOException{
 
+
+        return getCurrentZipEntry();
+    }
+
+    public ComicPage getCurrentZipEntry() throws IOException{
 
         long dataSize;
         ComicPage page;
         byte[] data;
 
+        //open archive
         ZipFile zipFile = new ZipFile(archiveFile);
 
         try {
 
             Enumeration zipEntries = zipFile.getEntries();
 
-
+            //iterate over enum to current entry
             ZipEntry entry = (ZipEntry) zipEntries.nextElement();
-
-            for (int i = 1; i <= currentEntry; i++) {
+            for (int i = 1; i <= currentEntryIndex; i++) {
 
                 entry = (ZipEntry) zipEntries.nextElement();
 
@@ -125,6 +132,7 @@ public class FileArchive {
             dataSize = entry.getSize();
             data = new byte[(int)dataSize];
 
+            //move entry contents into byte array
             InputStream in = zipFile.getInputStream(entry);
             try{
 
