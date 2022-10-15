@@ -1,5 +1,7 @@
 package com.comicshack.tools;
 
+import com.comicshack.comic.ComicPage;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -17,6 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipException;
+
+
 
 
 import org.apache.tools.zip.ZipEntry;
@@ -53,18 +57,97 @@ public class FileArchive {
     private static final String MAGIC_ZIP = "PK";
     private static final int MAGIC_ZIP_LENGTH = MAGIC_ZIP.length();
 
-    // Unrar error codes.
-    private static final int UNRAR_ARCHIVE_MUST_BE_UNLOCKED = 4;
-    private static final int UNRAR_CANNOT_CREATE_FILE = 9;
-    private static final int UNRAR_CANNOT_OPEN_FILE = 6;
-    private static final int UNRAR_CANNOT_PROCESS_COMMAND_LINE_OPTION = 7;
-    private static final int UNRAR_CANNOT_WRITE = 5;
-    private static final int UNRAR_CHECKSUM_ERROR = 3;
-    private static final int UNRAR_FATAL_ERROR = 2;
-    private static final int UNRAR_INTERRUPTED = 255;
-    private static final int UNRAR_OUT_OF_MEMORY = 8;
-    private static final int UNRAR_WARNING = 1;
+    private File archiveFile;
+    private String filename;
+    private String fileType;
+    int progress;
+    int totalEntries;
+    int currentEntry;
 
+    public FileArchive(File newFile) {
+        this.archiveFile = newFile;
+
+        //find other parameters on your own
+
+    }
+
+    public FileArchive(File archiveFile, int currentEntry) {
+        this.archiveFile = archiveFile;
+        this.progress = progress;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public ComicPage getCurrentZipEntry() throws IOException{
+
+
+        long dataSize;
+        ComicPage page;
+        byte[] data;
+
+        ZipFile zipFile = new ZipFile(archiveFile);
+
+        try {
+
+            Enumeration zipEntries = zipFile.getEntries();
+
+
+            ZipEntry entry = (ZipEntry) zipEntries.nextElement();
+
+            for (int i = 1; i <= currentEntry; i++) {
+
+                entry = (ZipEntry) zipEntries.nextElement();
+
+            }
+
+            dataSize = entry.getSize();
+            data = new byte[(int)dataSize];
+
+            InputStream in = zipFile.getInputStream(entry);
+            try{
+
+                BufferedInputStream inBuffered = new BufferedInputStream(in);
+                try{
+                    int bytesRead;
+                    while((bytesRead = inBuffered.read(data, 0, (int)dataSize)) != -1){};
+
+
+                } finally {
+                    inBuffered.close();
+                }
+            } finally {
+                in.close();
+            }
+        }finally {
+            zipFile.close();
+        }
+
+
+        page = new ComicPage(data, dataSize);
+        return page;
+    }
 
 
 }
