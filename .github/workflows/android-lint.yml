@@ -8,6 +8,15 @@ on:
       - '**.gradle'
       - gradle.properties
       - gradlew*
+  push:
+    branches: ['master']
+    paths:
+      - .github/workflows/android-lint.yml
+      - '*/src/**'
+      - gradle/**
+      - '**.gradle'
+      - gradle.properties
+      - gradlew*
 
 jobs:
   android-lint:
