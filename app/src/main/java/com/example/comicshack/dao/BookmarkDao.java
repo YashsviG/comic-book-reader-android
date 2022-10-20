@@ -8,15 +8,17 @@ import androidx.room.Update;
 import com.example.comicshack.entities.Bookmark;
 import com.example.comicshack.entities.Comic;
 
+import io.reactivex.rxjava3.core.Completable;
+
 @Dao
 public interface BookmarkDao {
 
     @Insert
-    public void InsertBookmarks(Bookmark... bookmarks);
+    public Completable InsertBookmarks(Bookmark... bookmarks);
 
     @Update
-    public void UpdateBookmarks(Bookmark... bookmarks);
+    public Completable UpdateBookmarks(Bookmark... bookmarks);
 
     @Delete
-    public void DeleteBookmarks(Bookmark... bookmarks);
+    public Completable DeleteBookmarks(Bookmark... bookmarks);
 }

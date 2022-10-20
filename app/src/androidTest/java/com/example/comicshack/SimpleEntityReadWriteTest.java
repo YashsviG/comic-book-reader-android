@@ -20,28 +20,34 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.List;
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 @RunWith(AndroidJUnit4.class)
 public class SimpleEntityReadWriteTest {
     private ComicDao comicDao;
     private ComicShackDatabase db;
+    private CompositeDisposable disposable;
 
     @Before
     public void createDb() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         db = Room.inMemoryDatabaseBuilder(context, ComicShackDatabase.class).build();
         comicDao = db.comicDao();
+        disposable = new CompositeDisposable();
     }
 
     @After
     public void closeDb() throws IOException {
         db.close();
+        disposable.clear();
     }
 
     @Test
     public void writeComicAndReadInList() throws Exception {
         Comic comic = new Comic("My comic", "Joe", "Batman", 2010, "", false);
-        comicDao.InsertComics(comic);
-        List<Comic> myComic = comicDao.getAllComics();
+        comicDao.InsertComics(comic).blockingAwait();
+
+        List<Comic> myComic = comicDao.getAllComics().blockingGet();
         assertEquals(myComic.get(0).getName(), "My comic");
     }
 }
