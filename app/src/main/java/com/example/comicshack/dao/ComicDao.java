@@ -12,21 +12,24 @@ import com.example.comicshack.entities.ComicWithBookmarks;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface ComicDao {
     @Insert
-    public void InsertComics(Comic... comics);
+    public Completable InsertComics(Comic... comics);
 
     @Update
-    public void UpdateComics(Comic... comics);
+    public Completable UpdateComics(Comic... comics);
 
     @Delete
-    public void DeleteComics(Comic... comics);
+    public Completable DeleteComics(Comic... comics);
 
     @Query("SELECT *, rowid FROM comics")
-    List<Comic> getAllComics();
+    Single<List<Comic>> getAllComics();
 
     @Transaction
     @Query("SELECT *, rowid FROM comics")
-    public List<ComicWithBookmarks> getComicsWithBookmarks();
+    public Single<List<ComicWithBookmarks>> getComicsWithBookmarks();
 }
