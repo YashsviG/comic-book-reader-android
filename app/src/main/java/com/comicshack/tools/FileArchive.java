@@ -30,8 +30,10 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 
-
-
+/**
+ *
+ *
+ */
 public class FileArchive {
 
     public static final String TYPE_PDF = "pdf";
@@ -93,7 +95,7 @@ public class FileArchive {
         return currentEntryIndex;
     }
 
-    public void setCurrentEntry(int currentEntryIndex) {
+    public void setCurrentEntryIndex(int currentEntryIndex) {
         this.currentEntryIndex = currentEntryIndex;
     }
 
@@ -133,20 +135,16 @@ public class FileArchive {
             data = new byte[(int)dataSize];
 
             //move entry contents into byte array
-            InputStream in = zipFile.getInputStream(entry);
-            try{
+            try (InputStream in = zipFile.getInputStream(entry)) {
 
-                BufferedInputStream inBuffered = new BufferedInputStream(in);
-                try{
+                try (BufferedInputStream inBuffered = new BufferedInputStream(in)) {
                     int bytesRead;
-                    while((bytesRead = inBuffered.read(data, 0, (int)dataSize)) != -1){};
+                    while ((bytesRead = inBuffered.read(data, 0, (int) dataSize)) != -1) {
+                    }
+                    ;
 
 
-                } finally {
-                    inBuffered.close();
                 }
-            } finally {
-                in.close();
             }
         }finally {
             zipFile.close();
