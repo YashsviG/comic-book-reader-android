@@ -1,4 +1,4 @@
-package com.example.comicshack.entities;
+package com.example.comicshack;
 
 
 /**

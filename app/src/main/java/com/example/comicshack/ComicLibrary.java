@@ -1,4 +1,4 @@
-package com.example.comicshack.entities;
+package com.example.comicshack;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
