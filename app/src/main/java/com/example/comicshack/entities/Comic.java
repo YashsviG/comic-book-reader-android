@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 
+import com.example.comicshack.tools.FileArchive;
+
 @Entity(tableName = "comics")
 @Fts4
 public class Comic
@@ -26,6 +28,10 @@ public class Comic
     private String fileLocation;
 
     private boolean isManga;
+
+    private FileArchive archive;
+
+    private ComicPage currentpage;
 
     public int getId() {
         return id;

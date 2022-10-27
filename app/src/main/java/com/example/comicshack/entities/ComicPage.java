@@ -1,5 +1,9 @@
-package com.comicshack.comic;
+package com.example.comicshack.entities;
 
+
+/**
+ * Class for containing everything needed to be displayed on a currently viewed comic page
+ */
 public class ComicPage {
 
     private byte[]data;
@@ -9,10 +13,11 @@ public class ComicPage {
 
 
 
-    public ComicPage(byte[] data, long size) {
+    public ComicPage(byte[] data, long size, String filetype) {
 
         this.dataSize = size;
         this.data = data.clone();
+        this.filetype = filetype;
 
 
 

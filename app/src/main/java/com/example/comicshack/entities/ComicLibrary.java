@@ -1,4 +1,4 @@
-package com.comicshack.comic;
+package com.example.comicshack.entities;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import com.comicshack.comic.Comic;
+import com.example.comicshack.entities.Comic;
 
 
 /**

@@ -1,34 +1,16 @@
-package com.comicshack.tools;
+package com.example.comicshack.tools;
 
-import com.comicshack.comic.ComicPage;
+import com.example.comicshack.entities.ComicPage;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipException;
-
-
 
 
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 
 /**
  *
@@ -151,7 +133,7 @@ public class FileArchive {
         }
 
 
-        page = new ComicPage(data, dataSize);
+        page = new ComicPage(data, dataSize, "jpg"); //probably need to add actual verification of filetypes in the future
         return page;
     }
 
