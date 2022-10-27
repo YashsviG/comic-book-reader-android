@@ -40,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation 'org.apache.ant:ant:1.10.12'
+    implementation 'org.apache.pdfbox:pdfbox:3.0.0-RC1'
     def room_version = "2.4.3"
     def kotlin_version = "1.7.20"
 
@@ -48,9 +50,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation "androidx.room:room-common:$room_version"
-    implementation files('libs\\apache-ant-zip.jar')
-    implementation files('libs\\pdfbox-app-2.0.27.jar')
-    implementation files('libs\\pdfbox-3.0.0-alpha3.jar')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
