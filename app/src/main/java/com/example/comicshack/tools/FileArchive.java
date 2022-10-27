@@ -1,6 +1,6 @@
 package com.example.comicshack.tools;
 
-import com.example.comicshack.entities.ComicPage;
+import com.example.comicshack.ComicPage;
 
 import java.io.BufferedInputStream;
 import java.io.File;
