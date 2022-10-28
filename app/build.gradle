@@ -15,6 +15,10 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        packagingOptions {
+            exclude 'META-INF/INDEX.LIST'
+            exclude 'META-INF/DEPENDENCIES'
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
