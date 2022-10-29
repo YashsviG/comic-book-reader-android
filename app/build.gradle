@@ -41,14 +41,29 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
     implementation 'org.apache.ant:ant:1.10.12'
     implementation 'org.apache.pdfbox:pdfbox:3.0.0-RC1'
+    implementation 'androidx.navigation:navigation-fragment:2.4.1'
+    implementation 'androidx.navigation:navigation-ui:2.4.1'
     def room_version = "2.4.3"
     def kotlin_version = "1.7.20"
+    def activity_version = "1.5.1"
+    def fragment_version = "1.5.4"
+    def lifecycle_version = "2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
+    // Java language implementation
+    implementation "androidx.activity:activity:$activity_version"
+
+    // Java language implementation
+    implementation "androidx.fragment:fragment:$fragment_version"
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

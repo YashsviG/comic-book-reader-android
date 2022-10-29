@@ -1,15 +1,24 @@
 package com.example.comicshack;
 
-public class SliderItem {
+import android.graphics.Bitmap;
 
-    private int image;
-    SliderItem(int image)
+public class SliderItem {
+    private Bitmap image;
+    private int comicID;
+
+    SliderItem(Bitmap image, int comicID)
     {
         this.image = image;
+        this.comicID = comicID;
     }
 
-    public int getImage()
+    public Bitmap getImage()
     {
         return image;
+    }
+
+    public int getComicID()
+    {
+        return comicID;
     }
 }

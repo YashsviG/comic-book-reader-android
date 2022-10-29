@@ -26,4 +26,16 @@ public class ComicPage {
 
 
     }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public long getDataSize() {
+        return dataSize;
+    }
+
+    public void setDataSize(long dataSize) {
+        this.dataSize = dataSize;
+    }
 }

@@ -1,14 +1,6 @@
 package com.example.comicshack;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,15 +8,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import com.example.comicshack.dao.ComicDao;
 import com.example.comicshack.database.ComicShackDatabase;
 import com.example.comicshack.entities.Comic;
-
-import java.util.List;
+import com.example.comicshack.tools.FileUtil;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddComic extends AppCompatActivity {
@@ -41,18 +38,15 @@ public class AddComic extends AppCompatActivity {
 
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            EditText filePathEditText = (EditText)findViewById(R.id.editTextFilePath);
-                            filePathEditText.setText((data.getData().getPath()));
-                        }
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        EditText filePathEditText = findViewById(R.id.editTextFilePath);
+                        filePathEditText.setText((FileUtil.getPath(data.getData(), getApplicationContext())));
                     }
                 });
 
-        db = Room.inMemoryDatabaseBuilder(getApplicationContext(), ComicShackDatabase.class).build();
+        db = ComicLibrary.getDb(getApplicationContext());
         comicDao = db.comicDao();
         disposable = new CompositeDisposable();
     }
@@ -71,11 +65,11 @@ public class AddComic extends AppCompatActivity {
         Button saveComicButton = (Button) findViewById(R.id.add_comic_to_db);
         saveComicButton.setEnabled(false);
 
-        EditText nameEditText = (EditText)findViewById(R.id.editTextName);
-        EditText authorEditText = (EditText)findViewById(R.id.editTextAuthor);
-        EditText seriesEditText = (EditText)findViewById(R.id.editTextSeries);
-        EditText yearEditText = (EditText)findViewById(R.id.editTextYear);
-        EditText filePathEditText = (EditText)findViewById(R.id.editTextFilePath);
+        EditText nameEditText = findViewById(R.id.editTextName);
+        EditText authorEditText = findViewById(R.id.editTextAuthor);
+        EditText seriesEditText = findViewById(R.id.editTextSeries);
+        EditText yearEditText = findViewById(R.id.editTextYear);
+        EditText filePathEditText = findViewById(R.id.editTextFilePath);
 
         Comic comic = new Comic(nameEditText.getText().toString(),
                 authorEditText.getText().toString(),
@@ -88,15 +82,18 @@ public class AddComic extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> onComicSaved()));
+
+
+        ComicLibrary.getLibrary().add(comic);
     }
 
     private void onComicSaved()
     {
-        EditText nameEditText = (EditText)findViewById(R.id.editTextName);
-        EditText authorEditText = (EditText)findViewById(R.id.editTextAuthor);
-        EditText seriesEditText = (EditText)findViewById(R.id.editTextSeries);
-        EditText yearEditText = (EditText)findViewById(R.id.editTextYear);
-        EditText filePathEditText = (EditText)findViewById(R.id.editTextFilePath);
+        EditText nameEditText = findViewById(R.id.editTextName);
+        EditText authorEditText = findViewById(R.id.editTextAuthor);
+        EditText seriesEditText = findViewById(R.id.editTextSeries);
+        EditText yearEditText = findViewById(R.id.editTextYear);
+        EditText filePathEditText = findViewById(R.id.editTextFilePath);
 
         nameEditText.setText("");
         authorEditText.setText("");
@@ -104,8 +101,10 @@ public class AddComic extends AppCompatActivity {
         yearEditText.setText("");
         filePathEditText.setText("");
 
-        Button saveComicButton = (Button) findViewById(R.id.add_comic_to_db);
+        Button saveComicButton = findViewById(R.id.add_comic_to_db);
         saveComicButton.setEnabled(true);
         Toast.makeText(this, "Comic Saved!", Toast.LENGTH_SHORT).show();
+
+        finish();
     }
 }
