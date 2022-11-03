@@ -14,7 +14,7 @@
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="34dp" />
 
     <EditText
@@ -28,21 +28,6 @@
         android:inputType="textPersonName"
         app:layout_constraintTop_toBottomOf="@+id/editTextName"
         tools:layout_editor_absoluteX="34dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="32dp"
-        android:text="Add a comic"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/editTextName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextSeries"
@@ -69,7 +54,7 @@
         tools:layout_editor_absoluteX="34dp" />
 
     <Button
-        android:id="@+id/add_comic_to_db"
+        android:id="@+id/addComicToDb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="147dp"

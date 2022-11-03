@@ -1,17 +1,14 @@
 package com.example.comicshack;
+
 import android.content.Context;
 
 import androidx.room.Room;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
 import com.example.comicshack.database.ComicShackDatabase;
 import com.example.comicshack.entities.Comic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

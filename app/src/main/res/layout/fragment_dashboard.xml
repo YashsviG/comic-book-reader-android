@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReadComic">
+    tools:context=".ui.dashboard.DashboardFragment">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPagerReadComic"
+        android:id="@+id/viewPagerImageSlider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:paddingStart="80dp"
+        android:paddingEnd="80dp" >
+
+    </androidx.viewpager2.widget.ViewPager2>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

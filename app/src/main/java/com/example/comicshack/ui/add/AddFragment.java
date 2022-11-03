@@ -1,22 +1,25 @@
-package com.example.comicshack;
+package com.example.comicshack.ui.add;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.comicshack.ComicLibrary;
 import com.example.comicshack.dao.ComicDao;
 import com.example.comicshack.database.ComicShackDatabase;
+import com.example.comicshack.databinding.FragmentAddBinding;
 import com.example.comicshack.entities.Comic;
 import com.example.comicshack.tools.FileUtil;
 
@@ -24,31 +27,38 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class AddComic extends AppCompatActivity {
+public class AddFragment extends Fragment {
 
+    private FragmentAddBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private ComicDao comicDao;
     private ComicShackDatabase db;
     private CompositeDisposable disposable;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_comic);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        AddViewModel addViewModel =
+                new ViewModelProvider(this).get(AddViewModel.class);
 
+        binding = FragmentAddBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+//        final TextView textView = binding.textHome;
+//        EditText filePathEditText = binding.editTextFilePath;
+//        addViewModel.getText().observe(getViewLifecycleOwner(), filePathEditText::setText);
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        EditText filePathEditText = findViewById(R.id.editTextFilePath);
-                        filePathEditText.setText((FileUtil.getPath(data.getData(), getApplicationContext())));
+                        EditText filePathEditText = binding.editTextFilePath;
+                        filePathEditText.setText((FileUtil.getPath(data.getData(), getActivity().getApplicationContext())));
                     }
                 });
-
-        db = ComicLibrary.getDb(getApplicationContext());
+        db = ComicLibrary.getDb(getActivity().getApplicationContext());
         comicDao = db.comicDao();
         disposable = new CompositeDisposable();
+        return root;
     }
 
     public void chooseFile(View view)
@@ -59,17 +69,16 @@ public class AddComic extends AppCompatActivity {
 
         activityResultLauncher.launch(chooseFile);
     }
-
     public void saveComic(View view)
     {
-        Button saveComicButton = (Button) findViewById(R.id.add_comic_to_db);
+        Button saveComicButton = (Button) binding.addComicToDb;
         saveComicButton.setEnabled(false);
 
-        EditText nameEditText = findViewById(R.id.editTextName);
-        EditText authorEditText = findViewById(R.id.editTextAuthor);
-        EditText seriesEditText = findViewById(R.id.editTextSeries);
-        EditText yearEditText = findViewById(R.id.editTextYear);
-        EditText filePathEditText = findViewById(R.id.editTextFilePath);
+        EditText nameEditText = binding.editTextName;
+        EditText authorEditText = binding.editTextAuthor;
+        EditText seriesEditText = binding.editTextSeries;
+        EditText yearEditText = binding.editTextYear;
+        EditText filePathEditText = binding.editTextFilePath;
 
         Comic comic = new Comic(nameEditText.getText().toString(),
                 authorEditText.getText().toString(),
@@ -89,11 +98,11 @@ public class AddComic extends AppCompatActivity {
 
     private void onComicSaved()
     {
-        EditText nameEditText = findViewById(R.id.editTextName);
-        EditText authorEditText = findViewById(R.id.editTextAuthor);
-        EditText seriesEditText = findViewById(R.id.editTextSeries);
-        EditText yearEditText = findViewById(R.id.editTextYear);
-        EditText filePathEditText = findViewById(R.id.editTextFilePath);
+        EditText nameEditText = binding.editTextName;
+        EditText authorEditText = binding.editTextAuthor;
+        EditText seriesEditText = binding.editTextSeries;
+        EditText yearEditText = binding.editTextYear;
+        EditText filePathEditText = binding.editTextFilePath;
 
         nameEditText.setText("");
         authorEditText.setText("");
@@ -101,10 +110,16 @@ public class AddComic extends AppCompatActivity {
         yearEditText.setText("");
         filePathEditText.setText("");
 
-        Button saveComicButton = findViewById(R.id.add_comic_to_db);
+        Button saveComicButton = binding.addComicToDb;
         saveComicButton.setEnabled(true);
-        Toast.makeText(this, "Comic Saved!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Comic Saved!", Toast.LENGTH_SHORT).show();
 
-        finish();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

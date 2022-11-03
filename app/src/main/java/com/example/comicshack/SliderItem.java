@@ -6,7 +6,7 @@ public class SliderItem {
     private Bitmap image;
     private int comicID;
 
-    SliderItem(Bitmap image, int comicID)
+    public SliderItem(Bitmap image, int comicID)
     {
         this.image = image;
         this.comicID = comicID;
