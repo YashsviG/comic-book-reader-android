@@ -58,6 +58,28 @@ public class AddFragment extends Fragment {
         db = ComicLibrary.getDb(getActivity().getApplicationContext());
         comicDao = db.comicDao();
         disposable = new CompositeDisposable();
+
+
+        Button chooseFile = (Button) binding.chooseFile;
+        chooseFile.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                chooseFile(v);
+            }
+        });
+
+        Button saveComicButton = (Button) binding.addComicToDb;
+        saveComicButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                saveComic(v);
+            }
+        });
+
         return root;
     }
 
