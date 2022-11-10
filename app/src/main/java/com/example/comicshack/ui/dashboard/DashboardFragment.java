@@ -66,75 +66,44 @@ public class DashboardFragment extends Fragment {
         disposable = new CompositeDisposable();
         comicLibrary = new ComicLibrary();
 
-        disposable.add(comicDao.getAllComics()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith( new DisposableSingleObserver<List<Comic>>(){
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
+        List<Comic> comicList = ComicLibrary.getLibrary();
+        viewPager2 = binding.viewPagerImageSlider;
 
-                    @Override
-                    public void onSuccess(List<Comic> comics) {
-                        List<Comic> comicList = ComicLibrary.getLibrary();
-                        List<String> directoryList = comicLibrary.getDirectories();
-                        for (Comic comic : comics)
-                        {
-                            comicList.add(comic);
-                            directoryList.add(comic.getFileLocation());
-                        }
-
-                        viewPager2 = binding.viewPagerImageSlider;
-
-                        List<SliderItem> sliderItems = new ArrayList<>();
-                        FileArchive archive;
-                        for (Comic comic : comicList)
-                        {
-                            archive = new FileArchive(new File(comic.getFileLocation()));
-                            ComicPage cover = null;
-                            try {
-                                cover = archive.getCurrentZipEntry();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            Bitmap bmp = BitmapFactory.decodeByteArray(cover.getData(), 0, (int)cover.getDataSize());
-                            sliderItems.add(new SliderItem(bmp, comic.getId()));
-                        }
-
-                        viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2));
-
-                        viewPager2.setClipToPadding(false);
-                        viewPager2.setClipChildren(false);
-                        viewPager2.setOffscreenPageLimit(3);
-                        viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-                        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-                        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-                        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
-                            @Override
-                            public void transformPage(@NonNull View page, float position) {
-                                float r = 1 - Math.abs(position);
-                                page.setScaleY(0.35f + r + 0.15f);
-                            }
-                        });
-
-                        viewPager2.setPageTransformer(compositePageTransformer);
-                    }
-                }));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (Environment.isExternalStorageManager()) {
-                //todo when permission is granted
-            } else {
-                //request for the permission
-                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-                intent.setData(uri);
-                startActivity(intent);
+        List<SliderItem> sliderItems = new ArrayList<>();
+        FileArchive archive;
+        for (Comic comic : comicList)
+        {
+            archive = new FileArchive(new File(comic.getFileLocation()));
+            ComicPage cover = null;
+            try {
+                cover = archive.getCurrentZipEntry();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+            Bitmap bmp = BitmapFactory.decodeByteArray(cover.getData(), 0, (int)cover.getDataSize());
+            sliderItems.add(new SliderItem(bmp, comic.getId()));
         }
+
+        viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2));
+
+        viewPager2.setClipToPadding(false);
+        viewPager2.setClipChildren(false);
+        viewPager2.setOffscreenPageLimit(3);
+        viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1 - Math.abs(position);
+                page.setScaleY(0.35f + r + 0.15f);
+            }
+        });
+
+        viewPager2.setPageTransformer(compositePageTransformer);
+
         return root;
     }
 
