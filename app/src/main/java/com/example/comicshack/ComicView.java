@@ -1,7 +1,6 @@
 package com.example.comicshack;
 
 import com.example.comicshack.tools.FileArchive;
-import com.example.comicshack.ComicPage;
 
 public class ComicView {
 

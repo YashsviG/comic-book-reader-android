@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 
-
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 
@@ -123,7 +122,6 @@ public class FileArchive {
                     int bytesRead;
                     while ((bytesRead = inBuffered.read(data, 0, (int) dataSize)) != -1) {
                     }
-                    ;
 
 
                 }

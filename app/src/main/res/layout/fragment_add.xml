@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Name"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="Name"
+        android:hint="@string/name"
         tools:layout_editor_absoluteX="34dp" />
 
     <EditText
@@ -24,25 +26,11 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Author"
+        android:autofillHints="Author"
+        android:hint="@string/author"
         android:inputType="textPersonName"
         app:layout_constraintTop_toBottomOf="@+id/editTextName"
         tools:layout_editor_absoluteX="34dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="32dp"
-        android:text="Add a comic"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/editTextName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextSeries"
@@ -51,7 +39,8 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Series"
+        android:autofillHints="Series"
+        android:hint="@string/series"
         android:inputType="textPersonName"
         app:layout_constraintTop_toBottomOf="@+id/editTextAuthor"
         tools:layout_editor_absoluteX="34dp" />
@@ -63,20 +52,20 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Year"
+        android:autofillHints="Year"
+        android:hint="@string/year"
         android:inputType="number"
         app:layout_constraintTop_toBottomOf="@+id/editTextSeries"
         tools:layout_editor_absoluteX="34dp" />
 
     <Button
-        android:id="@+id/add_comic_to_db"
+        android:id="@+id/addComicToDb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="147dp"
         android:layout_marginTop="68dp"
         android:layout_marginEnd="147dp"
-        android:onClick="saveComic"
-        android:text="Add Comic"
+        android:text="@string/title_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,22 +79,21 @@
         android:layout_marginTop="27dp"
         android:layout_marginEnd="6dp"
         android:clickable="false"
-        android:editable="false"
         android:ems="10"
         android:focusable="false"
         android:inputType="none"
-        app:layout_constraintEnd_toStartOf="@+id/choose_file"
+        app:layout_constraintEnd_toStartOf="@+id/chooseFile"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextYear" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextYear"
+        android:autofillHints="File address" />
 
     <Button
-        android:id="@+id/choose_file"
+        android:id="@+id/chooseFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginTop="24dp"
-        android:onClick="chooseFile"
-        android:text="Choose File..."
+        android:text="@string/choose_file"
         app:layout_constraintStart_toEndOf="@+id/editTextFilePath"
         app:layout_constraintTop_toBottomOf="@+id/editTextYear" />
 

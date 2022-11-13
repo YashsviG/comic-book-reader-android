@@ -1,6 +1,5 @@
 package com.example.comicshack;
 
-import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
-public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHolder>{
+public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHolder> {
 
     private List<SliderItem> sliderItems;
     private ViewPager2 viewPager;
@@ -45,6 +44,11 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
         return sliderItems.size();
     }
 
+    public List<SliderItem> getSliderItems()
+    {
+        return sliderItems;
+    }
+
     class SliderViewHolder extends RecyclerView.ViewHolder {
         private RoundedImageView imageView;
 
@@ -53,7 +57,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             imageView = itemView.findViewById(R.id.imageSlide);
         }
         void setImage(SliderItem sliderItem) {
-            imageView.setImageResource(sliderItem.getImage());
+            imageView.setImageBitmap(sliderItem.getImage());
         }
 
     }
