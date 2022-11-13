@@ -3,11 +3,7 @@ package com.example.comicshack.ui.dashboard;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.observers.DisposableSingleObserver;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DashboardFragment extends Fragment {
 
@@ -71,8 +64,7 @@ public class DashboardFragment extends Fragment {
 
         List<SliderItem> sliderItems = new ArrayList<>();
         FileArchive archive;
-        for (Comic comic : comicList)
-        {
+        for (Comic comic : comicList) {
             archive = new FileArchive(new File(comic.getFileLocation()));
             ComicPage cover = null;
             try {
@@ -81,7 +73,7 @@ public class DashboardFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            Bitmap bmp = BitmapFactory.decodeByteArray(cover.getData(), 0, (int)cover.getDataSize());
+            Bitmap bmp = BitmapFactory.decodeByteArray(cover.getData(), 0, (int) cover.getDataSize());
             sliderItems.add(new SliderItem(bmp, comic.getId()));
         }
 
@@ -107,23 +99,19 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
-    public void goToAddComic(View view)
-    {
+    public void goToAddComic(View view) {
         Intent intent = new Intent(getActivity(), AddFragment.class);
         startActivity(intent);
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         updateLibrary();
     }
 
-    private void updateLibrary()
-    {
-        if (viewPager2 != null)
-        {
+    private void updateLibrary() {
+        if (viewPager2 != null) {
             SliderAdapter adapter = (SliderAdapter) viewPager2.getAdapter();
 
             List<Comic> comics = ComicLibrary.getLibrary();
@@ -132,11 +120,9 @@ public class DashboardFragment extends Fragment {
             List<SliderItem> items = adapter.getSliderItems();
             int adapterCount = items.size();
 
-            int addedComics =  comicCount - adapterCount;
-            if (addedComics > 0)
-            {
-                for (int i = adapterCount; i < comicCount; i ++)
-                {
+            int addedComics = comicCount - adapterCount;
+            if (addedComics > 0) {
+                for (int i = adapterCount; i < comicCount; i++) {
                     Comic comic = comics.get(i);
                     FileArchive archive = new FileArchive(new File(comic.getFileLocation()));
                     ComicPage cover = null;
@@ -146,7 +132,7 @@ public class DashboardFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    Bitmap bmp = BitmapFactory.decodeByteArray(cover.getData(), 0, (int)cover.getDataSize());
+                    Bitmap bmp = BitmapFactory.decodeByteArray(cover.getData(), 0, (int) cover.getDataSize());
                     items.add(new SliderItem(bmp, comic.getId()));
                 }
 

@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class ComicLibrary {
     private static List<Comic> library;
-    private List<String> directories; //list of directories imported into the library
     private static ComicShackDatabase db;
+    private List<String> directories; //list of directories imported into the library
 
     //should hold our pointer to database
     //should be able to rebuild itself from a database at init.
@@ -27,26 +27,23 @@ public class ComicLibrary {
     }
 
     public static List<Comic> getLibrary() {
-        if (library == null)
-        {
+        if (library == null) {
             library = new ArrayList<Comic>();
         }
 
         return library;
     }
 
-    public List<String> getDirectories() {
-        return directories;
-    }
-
-    public static ComicShackDatabase getDb(Context context)
-    {
-        if (db == null)
-        {
+    public static ComicShackDatabase getDb(Context context) {
+        if (db == null) {
             db = Room.databaseBuilder(context, ComicShackDatabase.class, "comicshack_db").build();
         }
 
         return db;
+    }
+
+    public List<String> getDirectories() {
+        return directories;
     }
 
 }

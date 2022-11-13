@@ -12,6 +12,12 @@ public class Bookmark {
 
     private int location;
 
+    public Bookmark(int id, int comicID, int location) {
+        this.id = id;
+        this.comicID = comicID;
+        this.location = location;
+    }
+
     public int getId() {
         return id;
     }
@@ -33,12 +39,6 @@ public class Bookmark {
     }
 
     public void setLocation(int location) {
-        this.location = location;
-    }
-
-    public Bookmark(int id, int comicID, int location) {
-        this.id = id;
-        this.comicID = comicID;
         this.location = location;
     }
 }

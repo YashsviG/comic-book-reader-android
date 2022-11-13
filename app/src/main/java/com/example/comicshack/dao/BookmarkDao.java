@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Update;
 
 import com.example.comicshack.entities.Bookmark;
-import com.example.comicshack.entities.Comic;
 
 import io.reactivex.rxjava3.core.Completable;
 
