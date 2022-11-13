@@ -44,8 +44,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
         return sliderItems.size();
     }
 
-    public List<SliderItem> getSliderItems()
-    {
+    public List<SliderItem> getSliderItems() {
         return sliderItems;
     }
 
@@ -56,6 +55,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             super(itemView);
             imageView = itemView.findViewById(R.id.imageSlide);
         }
+
         void setImage(SliderItem sliderItem) {
             imageView.setImageBitmap(sliderItem.getImage());
         }

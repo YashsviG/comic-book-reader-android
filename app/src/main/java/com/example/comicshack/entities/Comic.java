@@ -8,8 +8,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "comics")
 @Fts4
-public class Comic
-{
+public class Comic {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rowid")
     private int id;
@@ -28,6 +27,21 @@ public class Comic
 
     private boolean isManga;
 
+
+    public Comic(String name,
+                 String author,
+                 String series,
+                 int releaseYear,
+                 String fileLocation,
+                 boolean isManga) {
+        this.name = name;
+        this.author = author;
+        this.series = series;
+        this.releaseYear = releaseYear;
+        this.currentPage = 0;
+        this.fileLocation = fileLocation;
+        this.isManga = isManga;
+    }
 
     public int getId() {
         return id;
@@ -90,21 +104,6 @@ public class Comic
     }
 
     public void setIsManga(boolean isManga) {
-        this.isManga = isManga;
-    }
-
-    public Comic(String name,
-                 String author,
-                 String series,
-                 int releaseYear,
-                 String fileLocation,
-                 boolean isManga) {
-        this.name = name;
-        this.author = author;
-        this.series = series;
-        this.releaseYear = releaseYear;
-        this.currentPage = 0;
-        this.fileLocation = fileLocation;
         this.isManga = isManga;
     }
 }

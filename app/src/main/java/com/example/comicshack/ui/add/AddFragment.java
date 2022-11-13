@@ -58,21 +58,17 @@ public class AddFragment extends Fragment {
 
 
         Button chooseFile = (Button) binding.chooseFile;
-        chooseFile.setOnClickListener(new View.OnClickListener()
-        {
+        chooseFile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 chooseFile(v);
             }
         });
 
         Button saveComicButton = (Button) binding.addComicToDb;
-        saveComicButton.setOnClickListener(new View.OnClickListener()
-        {
+        saveComicButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 saveComic(v);
             }
         });
@@ -80,16 +76,15 @@ public class AddFragment extends Fragment {
         return root;
     }
 
-    public void chooseFile(View view)
-    {
+    public void chooseFile(View view) {
         Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
         chooseFile.setType("*/*");
         chooseFile = Intent.createChooser(chooseFile, "Choose a comic");
 
         activityResultLauncher.launch(chooseFile);
     }
-    public void saveComic(View view)
-    {
+
+    public void saveComic(View view) {
         Button saveComicButton = (Button) binding.addComicToDb;
         saveComicButton.setEnabled(false);
 
@@ -115,8 +110,7 @@ public class AddFragment extends Fragment {
         ComicLibrary.getLibrary().add(comic);
     }
 
-    private void onComicSaved()
-    {
+    private void onComicSaved() {
         EditText nameEditText = binding.editTextName;
         EditText authorEditText = binding.editTextAuthor;
         EditText seriesEditText = binding.editTextSeries;

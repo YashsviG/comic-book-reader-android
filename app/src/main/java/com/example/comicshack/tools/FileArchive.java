@@ -2,17 +2,16 @@ package com.example.comicshack.tools;
 
 import com.example.comicshack.ComicPage;
 
+import org.apache.tools.zip.ZipEntry;
+import org.apache.tools.zip.ZipFile;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 
-import org.apache.tools.zip.ZipEntry;
-import org.apache.tools.zip.ZipFile;
-
 /**
- *
  *
  */
 public class FileArchive {
@@ -23,29 +22,29 @@ public class FileArchive {
     private static final int BUFFER_SIZE = 65536;
 
     /**
-     *  Magic bytes to identify a PDF archive.
+     * Magic bytes to identify a PDF archive.
      */
     private static final String MAGIC_PDF = "%PDF";
     private static final int MAGIC_PDF_LENGTH = MAGIC_PDF.length();
 
     /**
-     *  Magic bytes to identify a RAR archive.
+     * Magic bytes to identify a RAR archive.
      */
     private static final String MAGIC_RAR = "Rar!";
     private static final int MAGIC_RAR_LENGTH = MAGIC_RAR.length();
 
     /**
-     *  Magic bytes to identify a ZIP archive.
+     * Magic bytes to identify a ZIP archive.
      */
     private static final String MAGIC_ZIP = "PK";
     private static final int MAGIC_ZIP_LENGTH = MAGIC_ZIP.length();
 
     private final File archiveFile;
-    private String filename;
-    private String fileType;
     int progress;
     int totalEntries;
     int currentEntryIndex;
+    private String filename;
+    private String fileType;
 
     public FileArchive(File newFile) {
         this.archiveFile = newFile;
@@ -58,10 +57,6 @@ public class FileArchive {
     public FileArchive(File newFile, int currentEntryIndex) {
         this.archiveFile = newFile;
         this.currentEntryIndex = currentEntryIndex;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
     }
 
     public String getFileType() {
@@ -84,14 +79,18 @@ public class FileArchive {
         return filename;
     }
 
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     //to abstract out different file types when we have them
-    public ComicPage getCurrentEntry() throws IOException{
+    public ComicPage getCurrentEntry() throws IOException {
 
 
         return getCurrentZipEntry();
     }
 
-    public ComicPage getCurrentZipEntry() throws IOException{
+    public ComicPage getCurrentZipEntry() throws IOException {
 
         long dataSize;
         ComicPage page;
@@ -113,7 +112,7 @@ public class FileArchive {
             }
 
             dataSize = entry.getSize();
-            data = new byte[(int)dataSize];
+            data = new byte[(int) dataSize];
 
             //move entry contents into byte array
             try (InputStream in = zipFile.getInputStream(entry)) {
@@ -126,7 +125,7 @@ public class FileArchive {
 
                 }
             }
-        }finally {
+        } finally {
             zipFile.close();
         }
 
