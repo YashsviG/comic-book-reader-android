@@ -1,10 +1,12 @@
 package com.example.comicshack;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -16,10 +18,12 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     private List<SliderItem> sliderItems;
     private ViewPager2 viewPager;
+    private FragmentActivity fragmentActivity;
 
-    public SliderAdapter(List<SliderItem> sliderItems, ViewPager2 viewPager) {
+    public SliderAdapter(List<SliderItem> sliderItems, ViewPager2 viewPager, FragmentActivity activity) {
         this.sliderItems = sliderItems;
         this.viewPager = viewPager;
+        this.fragmentActivity = activity;
     }
 
     @NonNull
@@ -37,6 +41,15 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
         holder.setImage(sliderItems.get(position));
+
+        holder.itemView.setOnClickListener(view -> {
+            if (fragmentActivity != null)
+            {
+                Intent intent = new Intent(fragmentActivity, ReadComicActivity.class);
+                intent.putExtra("index", holder.getAdapterPosition());
+                view.getContext().startActivity((intent));
+            }
+        });
     }
 
     @Override

@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.comicshack.ComicLibrary;
 import com.example.comicshack.ComicPage;
+import com.example.comicshack.ReadComicActivity;
 import com.example.comicshack.SliderAdapter;
 import com.example.comicshack.SliderItem;
 import com.example.comicshack.dao.ComicDao;
@@ -52,15 +53,12 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
 
         viewPager2 = binding.viewPagerImageSlider;
-
-
         db = ComicLibrary.getDb(getActivity().getApplicationContext());
         comicDao = db.comicDao();
         disposable = new CompositeDisposable();
         comicLibrary = new ComicLibrary();
 
         List<Comic> comicList = ComicLibrary.getLibrary();
-        viewPager2 = binding.viewPagerImageSlider;
 
         List<SliderItem> sliderItems = new ArrayList<>();
         FileArchive archive;
@@ -77,7 +75,7 @@ public class DashboardFragment extends Fragment {
             sliderItems.add(new SliderItem(bmp, comic.getId()));
         }
 
-        viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2));
+        viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2, getActivity()));
 
         viewPager2.setClipToPadding(false);
         viewPager2.setClipChildren(false);
