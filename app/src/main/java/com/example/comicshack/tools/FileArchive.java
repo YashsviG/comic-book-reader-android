@@ -107,7 +107,9 @@ public class FileArchive {
             ZipEntry entry = (ZipEntry) zipEntries.nextElement();
             for (int i = 1; i <= currentEntryIndex; i++) {
 
-                entry = (ZipEntry) zipEntries.nextElement();
+                if (zipEntries.hasMoreElements()) {
+                    entry = (ZipEntry) zipEntries.nextElement();
+                }
 
             }
 
