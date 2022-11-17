@@ -8,4 +8,6 @@
     <string name="series">Series</string>
     <string name="year">Year</string>
     <string name="choose_file">Choose File...</string>
+    <string name="left_arrow">&lt;</string>
+    <string name="right_arrow">&gt;</string>
 </resources>

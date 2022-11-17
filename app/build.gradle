@@ -93,4 +93,6 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
 
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 }
