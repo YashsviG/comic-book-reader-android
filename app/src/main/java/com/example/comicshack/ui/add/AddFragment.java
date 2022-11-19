@@ -57,21 +57,11 @@ public class AddFragment extends Fragment {
         disposable = new CompositeDisposable();
 
 
-        Button chooseFile = (Button) binding.chooseFile;
-        chooseFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseFile(v);
-            }
-        });
+        Button chooseFile = binding.chooseFile;
+        chooseFile.setOnClickListener(v -> chooseFile(v));
 
-        Button saveComicButton = (Button) binding.addComicToDb;
-        saveComicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveComic(v);
-            }
-        });
+        Button saveComicButton = binding.addComicToDb;
+        saveComicButton.setOnClickListener(v -> saveComic(v));
 
         return root;
     }
@@ -85,7 +75,7 @@ public class AddFragment extends Fragment {
     }
 
     public void saveComic(View view) {
-        Button saveComicButton = (Button) binding.addComicToDb;
+        Button saveComicButton = binding.addComicToDb;
         saveComicButton.setEnabled(false);
 
         EditText nameEditText = binding.editTextName;
@@ -126,7 +116,6 @@ public class AddFragment extends Fragment {
         Button saveComicButton = binding.addComicToDb;
         saveComicButton.setEnabled(true);
         Toast.makeText(getContext(), "Comic Saved!", Toast.LENGTH_SHORT).show();
-
     }
 
 

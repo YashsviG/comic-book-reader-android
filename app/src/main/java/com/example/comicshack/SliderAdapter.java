@@ -50,6 +50,9 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
                 view.getContext().startActivity((intent));
             }
         });
+
+        holder.itemView.setLongClickable(true);
+        fragmentActivity.registerForContextMenu(holder.itemView);
     }
 
     @Override
