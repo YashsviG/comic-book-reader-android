@@ -18,7 +18,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.comicshack.ComicLibrary;
 import com.example.comicshack.ComicPage;
-import com.example.comicshack.ReadComicActivity;
 import com.example.comicshack.SliderAdapter;
 import com.example.comicshack.SliderItem;
 import com.example.comicshack.dao.ComicDao;
