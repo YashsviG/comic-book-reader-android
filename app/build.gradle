@@ -51,6 +51,8 @@ dependencies {
     implementation 'org.apache.pdfbox:pdfbox:3.0.0-RC1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     def room_version = "2.4.3"
     def kotlin_version = "1.7.20"
     def activity_version = "1.5.1"

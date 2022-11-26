@@ -7,19 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.comicshack.ui.add.AddFragment"
+        android:name="com.comicshack.view.ui.add.AddFragment"
         android:label="@string/title_add"
         tools:layout="@layout/fragment_add" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.comicshack.ui.dashboard.DashboardFragment"
+        android:name="com.comicshack.view.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.comicshack.ui.settings.SettingsFragment"
+        android:name="com.comicshack.view.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/navigation_edit"
+        android:name="com.comicshack.view.ui.edit.EditFragment"
+        android:label="Edit"
+        tools:layout="@layout/fragment_edit" />
 </navigation>
