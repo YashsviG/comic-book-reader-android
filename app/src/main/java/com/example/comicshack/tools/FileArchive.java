@@ -107,7 +107,9 @@ public class FileArchive {
             ZipEntry entry = (ZipEntry) zipEntries.nextElement();
             for (int i = 1; i <= currentEntryIndex; i++) {
 
-                entry = (ZipEntry) zipEntries.nextElement();
+                if (zipEntries.hasMoreElements()) {
+                    entry = (ZipEntry) zipEntries.nextElement();
+                }
 
             }
 
@@ -129,10 +131,7 @@ public class FileArchive {
             zipFile.close();
         }
 
-
         page = new ComicPage(data, dataSize, "jpg"); //probably need to add actual verification of filetypes in the future
         return page;
     }
-
-
 }
