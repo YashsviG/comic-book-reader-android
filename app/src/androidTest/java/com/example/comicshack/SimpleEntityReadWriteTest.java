@@ -8,9 +8,9 @@ import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.comicshack.dao.ComicDao;
-import com.example.comicshack.database.ComicShackDatabase;
-import com.example.comicshack.entities.Comic;
+import com.comicshack.model.dao.ComicDao;
+import com.comicshack.model.database.ComicShackDatabase;
+import com.comicshack.model.entities.Comic;
 
 import org.junit.After;
 import org.junit.Before;

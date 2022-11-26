@@ -5,7 +5,7 @@
     android:id="@+id/edit_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.edit.EditFragment">
+    tools:context="com.comicshack.view.ui.edit.EditFragment">
 
     <EditText
         android:id="@+id/editName"

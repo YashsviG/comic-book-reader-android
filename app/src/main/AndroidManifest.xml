@@ -16,7 +16,7 @@
         android:theme="@style/Theme.ComicShack"
         tools:targetApi="31">
         <activity
-            android:name="com.example.comicshack.MainActivity"
+            android:name="com.comicshack.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
         </activity>
 
         <activity
-            android:name="com.example.comicshack.ReadComicActivity"
+            android:name="com.comicshack.view.ReadComicActivity"
             android:exported="false">
         </activity>
     </application>
