@@ -2,6 +2,10 @@ package com.example.comicshack;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -52,17 +56,15 @@ public class UITest {
     }
 
     @Test
-    public void testAddComicForm() {
-//        final Menu menu = bottomNavigation.getMenu();
-//        assertNotNull("Menu should not be null", menu);
-//        assertEquals("Should have matching number of items", MENU_CONTENT_ITEM_IDS.length, menu.size());
-//        for (int i = 0; i < MENU_CONTENT_ITEM_IDS.length; i++) {
-//            final MenuItem currItem = menu.getItem(i);
-//            assertEquals("ID for Item #" + i, MENU_CONTENT_ITEM_IDS[i], currItem.getItemId());
-//        }
+    public void addsComicToDB() {
+        onView(withId(R.id.editTextName)).perform(typeText("UI Auto Test"));
+        onView(withId(R.id.editTextAuthor)).perform(typeText("UITest"));
+        onView(withId(R.id.editTextSeries)).perform(typeText("1"));
+        onView(withId(R.id.editTextYear)).perform(typeText(String.valueOf("2022")));
+        onView(withId(R.id.chooseFile)).perform(click());
+        // need to figure intent here to give file to it to add
+        onView(withId(R.id.addComicToDb)).perform(click());
 
-        ViewInteraction nav_view = onView(ViewMatchers.withId(R.id.nav_view)); //androidx.test.espresso.ViewInteraction@2b94970
-        //perform some automation here to click on buttons
 
     }
 }
