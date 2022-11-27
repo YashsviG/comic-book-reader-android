@@ -6,30 +6,28 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import android.content.Context;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.content.Intent;
 
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.ViewAssertion;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.assertion.ViewAssertions;
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.comicshack.model.ComicLibrary;
+import com.comicshack.model.entities.Comic;
+import com.comicshack.view.MainActivity;
+import com.comicshack.view.ReadComicActivity;
+import com.comicshack.view.ui.dashboard.DashboardFragment;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Map;
+import java.util.List;
+
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -39,8 +37,7 @@ import java.util.Map;
 @RunWith(AndroidJUnit4.class)
 public class UITest {
     @Rule
-    public ActivityScenarioRule<MainActivity> activityRule =
-            new ActivityScenarioRule(MainActivity.class);
+    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
 
     private static final int[] MENU_CONTENT_ITEM_IDS = {
             R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
@@ -65,6 +62,25 @@ public class UITest {
         // need to figure intent here to give file to it to add
         onView(withId(R.id.addComicToDb)).perform(click());
 
+//        onView(withText("Comic Saved!")).check(matches(isDisplayed()));
+    }
 
+    @Rule
+    public ActivityTestRule<ReadComicActivity> activityTestRule2 = new ActivityTestRule<ReadComicActivity>(ReadComicActivity.class) {
+        @Override
+        protected Intent getActivityIntent() {
+            Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+            Intent intent = new Intent(context, ReadComicActivity.class);
+            List<Comic> comicList = ComicLibrary.getLibrary();
+            comicList.get(intent.getIntExtra("index", 0));
+            return intent;
+        }
+
+    };
+
+
+    @Test
+    public void viewComic() {
+        onView(withId(R.id.photo_view)).check(matches(isDisplayed()));
     }
 }
