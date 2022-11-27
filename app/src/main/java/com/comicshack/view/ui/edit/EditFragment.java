@@ -29,7 +29,6 @@ public class EditFragment extends Fragment {
     private ComicDao comicDao;
     private ComicShackDatabase db;
     private CompositeDisposable disposable;
-    private ComicLibrary comicLibrary;
     private Comic comic;
 
     public static EditFragment newInstance() {
@@ -45,7 +44,6 @@ public class EditFragment extends Fragment {
         db = ComicLibrary.getDb(getActivity().getApplicationContext());
         comicDao = db.comicDao();
         disposable = new CompositeDisposable();
-        comicLibrary = new ComicLibrary();
 
         EditText nameEdit = binding.editName;
         EditText authorEdit = binding.editAuthor;
@@ -56,7 +54,7 @@ public class EditFragment extends Fragment {
 
         int comicID = bundle.getInt(getString(R.string.comic_id));
 
-        comic = comicLibrary.getLibrary().stream().filter(c -> c.getId() == comicID).findFirst().get();
+        comic = ComicLibrary.getLibrary().stream().filter(c -> c.getId() == comicID).findFirst().get();
 
         nameEdit.setText(comic.getName());
         authorEdit.setText(comic.getAuthor());
