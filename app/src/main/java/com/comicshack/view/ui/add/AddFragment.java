@@ -118,7 +118,6 @@ public class AddFragment extends Fragment {
         Toast.makeText(getContext(), "Comic Saved!", Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
