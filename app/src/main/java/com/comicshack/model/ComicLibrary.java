@@ -17,13 +17,12 @@ import java.util.List;
 public class ComicLibrary {
     private static List<Comic> library;
     private static ComicShackDatabase db;
-    private List<String> directories; //list of directories imported into the library
+    private static List<String> directories; //list of directories imported into the library
 
     //should hold our pointer to database
     //should be able to rebuild itself from a database at init.
 
-    public ComicLibrary() {
-        directories = new ArrayList<String>();
+    private ComicLibrary() {
     }
 
     public static List<Comic> getLibrary() {
@@ -42,7 +41,12 @@ public class ComicLibrary {
         return db;
     }
 
-    public List<String> getDirectories() {
+    public static List<String> getDirectories() {
+        if (directories == null)
+        {
+            directories = new ArrayList<String>();
+        }
+
         return directories;
     }
 
