@@ -78,62 +78,17 @@ public class AddFragment extends Fragment {
         Button saveComicButton = binding.addComicToDb;
         saveComicButton.setEnabled(false);
 
-        String name = binding.editTextName.getText().toString();
-        if (!isValidString(name))
-        {
-            Toast.makeText(getContext(), "Please enter a valid name.", Toast.LENGTH_SHORT).show();
-            saveComicButton.setEnabled(true);
-            return;
-        }
+        EditText nameEditText = binding.editTextName;
+        EditText authorEditText = binding.editTextAuthor;
+        EditText seriesEditText = binding.editTextSeries;
+        EditText yearEditText = binding.editTextYear;
+        EditText filePathEditText = binding.editTextFilePath;
 
-        String author = binding.editTextAuthor.getText().toString();
-        if (!isValidString(author))
-        {
-            Toast.makeText(getContext(), "Please enter a valid author.", Toast.LENGTH_SHORT).show();
-            saveComicButton.setEnabled(true);
-            return;
-        }
-
-        String series = binding.editTextSeries.getText().toString();
-        if (!isValidString(series))
-        {
-            Toast.makeText(getContext(), "Please enter a valid series.", Toast.LENGTH_SHORT).show();
-            saveComicButton.setEnabled(true);
-            return;
-        }
-
-        String year = binding.editTextYear.getText().toString();
-        if (!isValidString(year))
-        {
-            Toast.makeText(getContext(), "Please enter a valid year.", Toast.LENGTH_SHORT).show();
-            saveComicButton.setEnabled(true);
-            return;
-
-        }
-
-        String filePath = binding.editTextFilePath.getText().toString();
-        if (!isValidString(filePath))
-        {
-            Toast.makeText(getContext(), "Please enter a valid file.", Toast.LENGTH_SHORT).show();
-            saveComicButton.setEnabled(true);
-            return;
-        }
-
-        Integer yearInt = null;
-        try {
-            yearInt = Integer.parseInt(year);
-        }
-        catch (NumberFormatException e) {
-            Toast.makeText(getContext(), "Please enter a valid year.", Toast.LENGTH_SHORT).show();
-            saveComicButton.setEnabled(true);
-            return;
-        }
-
-        Comic comic = new Comic(name,
-                author,
-                series,
-                yearInt,
-                filePath,
+        Comic comic = new Comic(nameEditText.getText().toString(),
+                authorEditText.getText().toString(),
+                seriesEditText.getText().toString(),
+                Integer.parseInt(yearEditText.getText().toString()),
+                filePathEditText.getText().toString(),
                 false);
 
         disposable.add(comicDao.InsertComics(comic)
@@ -143,12 +98,6 @@ public class AddFragment extends Fragment {
 
 
         ComicLibrary.getLibrary().add(comic);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
     private void onComicSaved() {
@@ -170,12 +119,9 @@ public class AddFragment extends Fragment {
     }
 
 
-    private boolean isValidString(String input) {
-        if (input == null || input.isEmpty() || input.trim().length() == 0) {
-            return false;
-        }
-
-        return true;
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
-
 }

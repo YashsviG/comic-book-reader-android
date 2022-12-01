@@ -29,6 +29,7 @@ public class EditFragment extends Fragment {
     private ComicDao comicDao;
     private ComicShackDatabase db;
     private CompositeDisposable disposable;
+    private ComicLibrary comicLibrary;
     private Comic comic;
 
     public static EditFragment newInstance() {
@@ -44,6 +45,7 @@ public class EditFragment extends Fragment {
         db = ComicLibrary.getDb(getActivity().getApplicationContext());
         comicDao = db.comicDao();
         disposable = new CompositeDisposable();
+        comicLibrary = new ComicLibrary();
 
         EditText nameEdit = binding.editName;
         EditText authorEdit = binding.editAuthor;
@@ -54,7 +56,7 @@ public class EditFragment extends Fragment {
 
         int comicID = bundle.getInt(getString(R.string.comic_id));
 
-        comic = ComicLibrary.getLibrary().stream().filter(c -> c.getId() == comicID).findFirst().get();
+        comic = comicLibrary.getLibrary().stream().filter(c -> c.getId() == comicID).findFirst().get();
 
         nameEdit.setText(comic.getName());
         authorEdit.setText(comic.getAuthor());
@@ -71,63 +73,20 @@ public class EditFragment extends Fragment {
         Button editComicButton = (Button) binding.editComicButton;
         editComicButton.setEnabled(false);
 
-        String name = binding.editName.getText().toString();
-        if (!isValidString(name))
-        {
-            Toast.makeText(getContext(), "Please enter a valid name.", Toast.LENGTH_SHORT).show();
-            editComicButton.setEnabled(true);
-            return;
-        }
+        EditText nameEditText = binding.editName;
+        EditText authorEditText = binding.editAuthor;
+        EditText seriesEditText = binding.editSeries;
+        EditText yearEditText = binding.editYear;
 
-        String author = binding.editAuthor.getText().toString();
-        if (!isValidString(author))
-        {
-            Toast.makeText(getContext(), "Please enter a valid author.", Toast.LENGTH_SHORT).show();
-            editComicButton.setEnabled(true);
-            return;
-        }
-
-        String series = binding.editSeries.getText().toString();
-        if (!isValidString(series))
-        {
-            Toast.makeText(getContext(), "Please enter a valid series.", Toast.LENGTH_SHORT).show();
-            editComicButton.setEnabled(true);
-            return;
-        }
-
-        String year = binding.editYear.getText().toString();
-        if (!isValidString(series))
-        {
-            Toast.makeText(getContext(), "Please enter a valid year.", Toast.LENGTH_SHORT).show();
-            editComicButton.setEnabled(true);
-            return;
-        }
-
-        Integer yearInt = null;
-        try {
-            yearInt = Integer.parseInt(year);
-        }
-        catch (NumberFormatException e) {
-            Toast.makeText(getContext(), "Please enter a valid year.", Toast.LENGTH_SHORT).show();
-            editComicButton.setEnabled(true);
-            return;
-        }
-
-        comic.setAuthor(author);
-        comic.setName(name);
-        comic.setSeries(series);
-        comic.setReleaseYear(yearInt);
+        comic.setAuthor(authorEditText.getText().toString());
+        comic.setName(nameEditText.getText().toString());
+        comic.setSeries(seriesEditText.getText().toString());
+        comic.setReleaseYear(Integer.parseInt(yearEditText.getText().toString()));
 
         disposable.add(comicDao.UpdateComics(comic)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> onComicEdited()));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
     private void onComicEdited() {
@@ -138,11 +97,9 @@ public class EditFragment extends Fragment {
         NavHostFragment.findNavController(this).navigateUp();
     }
 
-    private boolean isValidString(String input) {
-        if (input == null || input.isEmpty() || input.trim().length() == 0) {
-            return false;
-        }
-
-        return true;
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private ComicDao comicDao;
     private CompositeDisposable disposable;
+    private ComicLibrary comicLibrary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         ComicShackDatabase db = ComicLibrary.getDb(this.getApplicationContext());
         comicDao = db.comicDao();
         disposable = new CompositeDisposable();
+        comicLibrary = new ComicLibrary();
         disposable.add(comicDao.getAllComics()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(List<Comic> comics) {
                         List<Comic> comicList = ComicLibrary.getLibrary();
-                        List<String> directoryList = ComicLibrary.getDirectories();
+                        List<String> directoryList = comicLibrary.getDirectories();
                         for (Comic comic : comics) {
                             comicList.add(comic);
                             directoryList.add(comic.getFileLocation());

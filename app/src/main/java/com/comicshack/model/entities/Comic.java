@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Fts4;
 import androidx.room.PrimaryKey;
 
+
 @Entity(tableName = "comics")
 @Fts4
 public class Comic {
@@ -25,6 +26,7 @@ public class Comic {
     private String fileLocation;
 
     private boolean isManga;
+
 
     public Comic(String name,
                  String author,

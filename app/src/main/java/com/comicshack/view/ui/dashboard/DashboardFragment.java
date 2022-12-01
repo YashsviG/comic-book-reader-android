@@ -41,6 +41,7 @@ public class DashboardFragment extends Fragment {
     private ComicDao comicDao;
     private ComicShackDatabase db;
     private CompositeDisposable disposable;
+    private ComicLibrary comicLibrary;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class DashboardFragment extends Fragment {
         db = ComicLibrary.getDb(getActivity().getApplicationContext());
         comicDao = db.comicDao();
         disposable = new CompositeDisposable();
+        comicLibrary = new ComicLibrary();
 
         List<Comic> comicList = ComicLibrary.getLibrary();
 
@@ -81,6 +83,13 @@ public class DashboardFragment extends Fragment {
 
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1 - Math.abs(position);
+                page.setScaleY(0.35f + r + 0.15f);
+            }
+        });
 
         viewPager2.setPageTransformer(compositePageTransformer);
 
