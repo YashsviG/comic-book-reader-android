@@ -85,8 +85,6 @@ public class FileArchive {
 
     //to abstract out different file types when we have them
     public ComicPage getCurrentEntry() throws IOException {
-
-
         return getCurrentZipEntry();
     }
 
