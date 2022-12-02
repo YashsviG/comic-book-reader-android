@@ -11,6 +11,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import java.io.File;
+
 public class FileUtil {
     /*
      * Gets the file path of the given Uri.
@@ -28,12 +30,28 @@ public class FileUtil {
                 final String[] split = docId.split(":");
                 return Environment.getExternalStorageDirectory() + "/" + split[1];
             } else if (isDownloadsDocument(uri)) {
-                final String id = DocumentsContract.getDocumentId(uri);
-                if (id.startsWith("raw:")) {
-                    return id.replaceFirst("raw:", "");
+//                final String id = DocumentsContract.getDocumentId(uri);
+//                if (id.startsWith("raw:")) {
+//                    return id.replaceFirst("raw:", "");
+//                }
+//                uri = ContentUris.withAppendedId(
+//                        Uri.parse("content://downloads/my_downloads"), Long.valueOf(id));
+
+                String fileName = getFilePath(context, uri);
+                if (fileName != null) {
+                    return Environment.getExternalStorageDirectory().toString() + "/Download/" + fileName;
                 }
-                uri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                String id = DocumentsContract.getDocumentId(uri);
+                if (id.startsWith("raw:")) {
+                    id = id.replaceFirst("raw:", "");
+                    File file = new File(id);
+                    if (file.exists())
+                        return id;
+                }
+
+                uri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
             } else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -69,6 +87,27 @@ public class FileUtil {
             }
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
+        }
+        return null;
+    }
+
+    public static String getFilePath(Context context, Uri uri) {
+
+        Cursor cursor = null;
+        final String[] projection = {
+                MediaStore.MediaColumns.DISPLAY_NAME
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, null, null,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
         }
         return null;
     }
