@@ -50,4 +50,24 @@ public class SimpleEntityReadWriteTest {
         List<Comic> myComic = comicDao.getAllComics().blockingGet();
         assertEquals(myComic.get(0).getName(), "My comic");
     }
+
+    @Test
+    public void readManyComics() throws Exception {
+        int comicCount = 500;
+        Comic[] comicsToInsert = new Comic[comicCount];
+        for (int i = 0; i < comicCount; i++) {
+            comicsToInsert[i] = new Comic("name",
+                    "author",
+                    "series",
+                    2022,
+                    "My File",
+                    false);
+        }
+
+        comicDao.InsertComics(comicsToInsert).blockingAwait();
+
+        List<Comic> comicsToRead = comicDao.getAllComics().blockingGet();
+
+        assertEquals(comicsToRead.size(), comicCount);
+    }
 }
